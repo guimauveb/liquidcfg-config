@@ -1,0 +1,25 @@
+#!/bin/bash
+# Script used to set the Corsair AIO pump and fans mode.
+
+while getopts m: flag
+do
+	case "${flag}" in
+		m) mode=${OPTARG};;
+	esac
+done
+
+if [[ $mode = "quiet" ]];
+then
+	sudo liquidctl --match corsair initialize --pump-mode quiet > /dev/null 2>&1
+elif [[ $mode = "balanced" ]];
+then
+	sudo liquidctl --match corsair initialize --pump-mode balanced > /dev/null 2>&1
+	sudo liquidctl --match corsair set fan speed 20 20 40 70 50 100 > /dev/null 2>&1
+elif [[ $mode = "extreme" ]]; 
+then
+	sudo liquidctl --match corsair initialize --pump-mode extreme > /dev/null 2>&1
+	sudo liquidctl --match corsair set fan speed 100 > /dev/null 2>&1
+else 
+	echo "usage"
+	echo "aio -m <mode> (quiet, balanced, extreme)"
+fi

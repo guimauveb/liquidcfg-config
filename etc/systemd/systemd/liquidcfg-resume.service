@@ -1,0 +1,10 @@
+[Unit]
+Description=Restart liquidcfg after resume
+After=suspend.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/systemctl restart liquidcfg.service
+
+[Install]
+WantedBy=suspend.target
